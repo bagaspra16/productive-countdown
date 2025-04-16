@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import tickSound from '../assets/sounds/tick.mp3';
 import alarmSound from '../assets/sounds/alarm.mp3';
 // Import a new beep sound for the last 10 seconds
-import finalBeepSound from '../assets/sounds/alarm.mp3';
+import finalBeepSound from '../assets/sounds/finalBeep.mp3';
 
 interface CountdownProps {
   initialTime: number; // Duration in minutes

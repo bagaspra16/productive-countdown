@@ -22,7 +22,6 @@ function App() {
     startTask,
     completeActiveTask,
     getActiveTask,
-    clearCompletedTasks,
   } = useTasks();
 
   const activeTask = getActiveTask();
@@ -84,13 +83,14 @@ function App() {
         onClose={() => setTaskListModalOpen(false)}
         title="Task Management"
       >
-        <TaskList 
-          tasks={tasks}
-          activeTaskId={activeTaskId}
-          onSelectTask={handleSelectTask}
-          onDeleteTask={removeTask}
-          onClearCompleted={clearCompletedTasks}
-        />
+        <div className="px-2">
+          <TaskList 
+            tasks={tasks}
+            activeTaskId={activeTaskId}
+            onSelectTask={handleSelectTask}
+            onDeleteTask={removeTask}
+          />
+        </div>
       </Modal>
       
       {/* Add Task Modal */}
@@ -162,4 +162,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

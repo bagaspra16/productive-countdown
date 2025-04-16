@@ -1,12 +1,44 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Task, TaskList } from '../types/task';
 import { v4 as uuidv4 } from 'uuid';
 
+// Local storage key for saving tasks
+const LOCAL_STORAGE_KEY = 'productive_countdown_tasks';
+
+// Helper to safely parse dates from JSON
+const parseTasksFromStorage = (data: string | null): TaskList => {
+  if (!data) return { tasks: [], activeTaskId: null };
+  
+  try {
+    const parsedData = JSON.parse(data);
+    
+    // Convert ISO string dates back to Date objects
+    const tasks = parsedData.tasks.map((task: any) => ({
+      ...task,
+      startTime: task.startTime ? new Date(task.startTime) : undefined
+    }));
+    
+    return {
+      tasks,
+      activeTaskId: parsedData.activeTaskId
+    };
+  } catch (error) {
+    console.error('Error parsing tasks from localStorage:', error);
+    return { tasks: [], activeTaskId: null };
+  }
+};
+
 export function useTasks() {
-  const [taskList, setTaskList] = useState<TaskList>({
-    tasks: [],
-    activeTaskId: null,
+  // Initialize state from localStorage
+  const [taskList, setTaskList] = useState<TaskList>(() => {
+    const savedTasks = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return parseTasksFromStorage(savedTasks);
   });
+
+  // Save to localStorage whenever taskList changes
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(taskList));
+  }, [taskList]);
 
   // Add a new task
   const addTask = useCallback((task: Omit<Task, 'id' | 'isActive' | 'isCompleted'>) => {
@@ -80,6 +112,21 @@ export function useTasks() {
     return taskList.tasks.find(task => task.id === taskList.activeTaskId) || null;
   }, [taskList.tasks, taskList.activeTaskId]);
 
+  // Clear all completed tasks
+  const clearCompletedTasks = useCallback(() => {
+    setTaskList(prev => ({
+      ...prev,
+      tasks: prev.tasks.filter(task => !task.isCompleted),
+    }));
+  }, []);
+
+  // Clear all tasks (for testing purposes)
+  const clearAllTasks = useCallback(() => {
+    if (window.confirm('Are you sure you want to delete all tasks?')) {
+      setTaskList({ tasks: [], activeTaskId: null });
+    }
+  }, []);
+
   return {
     tasks: taskList.tasks,
     activeTaskId: taskList.activeTaskId,
@@ -89,5 +136,7 @@ export function useTasks() {
     startTask,
     completeActiveTask,
     getActiveTask,
+    clearCompletedTasks,
+    clearAllTasks,
   };
 } 

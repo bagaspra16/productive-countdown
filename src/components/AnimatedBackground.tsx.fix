@@ -1,0 +1,215 @@
+import React, { useEffect, useRef, useState } from 'react';
+
+// Define the types of productivity icons we'll use
+const PRODUCTIVITY_ICONS = [
+  'clock',
+  'calendar',
+  'checkmark',
+  'task',
+  'star',
+  'bulb',
+  'graph',
+  'trophy',
+  'target',
+  'rocket',
+];
+
+// Icon animation properties
+interface FloatingIcon {
+  id: number;
+  type: string;
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+  rotation: number;
+  speed: number;
+  delay: number;
+  color: string;
+  direction: number; // 1 for up, -1 for down
+}
+
+const AnimatedBackground: React.FC = () => {
+  const [icons, setIcons] = useState<FloatingIcon[]>([]);
+  const animationFrameRef = useRef<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const gradientStep = useRef(0);
+
+  // Generate random colors within our theme
+  const getRandomColor = () => {
+    const colors = [
+      'rgba(59, 130, 246, 0.5)', // primary (blue)
+      'rgba(16, 185, 129, 0.5)', // secondary (green)
+      'rgba(139, 92, 246, 0.5)', // info (purple)
+      'rgba(245, 158, 11, 0.5)', // warning (amber)
+      'rgba(34, 197, 94, 0.5)', // success (green)
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+
+  // Initialize floating icons
+  useEffect(() => {
+    if (containerRef.current) {
+      const { width, height } = containerRef.current.getBoundingClientRect();
+      
+      const newIcons: FloatingIcon[] = [];
+      const count = Math.min(40, Math.floor((width * height) / 15000)); // More icons, responsive to screen size
+      
+      for (let i = 0; i < count; i++) {
+        newIcons.push({
+          id: i,
+          type: PRODUCTIVITY_ICONS[Math.floor(Math.random() * PRODUCTIVITY_ICONS.length)],
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: 16 + Math.random() * 24, // 16-40px
+          opacity: 0.1 + Math.random() * 0.25, // 0.1-0.35
+          rotation: Math.random() * 360,
+          speed: 0.4 + Math.random() * 1.2,
+          delay: Math.random() * 5000,
+          color: getRandomColor(),
+          direction: Math.random() > 0.5 ? 1 : -1,
+        });
+      }
+      
+      setIcons(newIcons);
+    }
+    
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
+  // Animation loop for icons and gradient
+  useEffect(() => {
+    if (!icons.length) return;
+    
+    let lastTimestamp = 0;
+    const animate = (timestamp: number) => {
+      if (!containerRef.current) return;
+      
+      // Only update every 40ms for better performance
+      if (timestamp - lastTimestamp > 40) {
+        lastTimestamp = timestamp;
+        
+        // Only use height since width is not needed here
+        const { height } = containerRef.current.getBoundingClientRect();
+        
+        // Update gradient animation - slower to be more subtle
+        gradientStep.current = (gradientStep.current + 0.1) % 360;
+        containerRef.current.style.background = `
+          linear-gradient(
+            ${gradientStep.current}deg,
+            rgba(15, 23, 42, 1) 0%,
+            rgba(30, 41, 59, 0.95) 40%,
+            rgba(51, 65, 85, 0.85) 70%,
+            rgba(15, 23, 42, 0.95) 100%
+          )
+        `;
+        
+        // Update icons
+        setIcons(prevIcons => 
+          prevIcons.map(icon => {
+            // Apply movement pattern with delay
+            const now = timestamp % 10000;
+            const active = now > icon.delay;
+            
+            // Calculate new position with bounds checking
+            let newY = icon.y;
+            if (active) {
+              newY = icon.y - (icon.speed * icon.direction);
+              
+              // Reverse direction if it hits boundaries
+              if (newY < -50 || newY > height + 50) {
+                icon.direction *= -1;
+                newY = icon.y + (icon.speed * icon.direction);
+              }
+            }
+            
+            // Apply slight horizontal movement and rotation
+            const newX = icon.x + Math.sin(timestamp / 1000 + icon.id) * 0.8;
+            const newRotation = icon.rotation + 0.2;
+            
+            return {
+              ...icon,
+              x: newX,
+              y: newY,
+              rotation: newRotation,
+            };
+          })
+        );
+      }
+      
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+    
+    animationFrameRef.current = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [icons.length]);
+
+  // Render the appropriate SVG icon based on type
+  const renderIcon = (type: string, color: string) => {
+    switch (type) {
+      case 'clock':
+        return (
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color}>
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-18c4.418 0 8 3.582 8 8s-3.582 8-8 8-8-3.582-8-8 3.582-8 8-8zm1 8V7h-2v6h5v-2h-3z" />
+          </svg>
+        );
+      // Other icon cases remain the same...
+      default:
+        return (
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color}>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4-8c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4z" />
+          </svg>
+        );
+    }
+  };
+
+  return (
+    <div 
+      ref={containerRef}
+      className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none z-0 transition-colors duration-1000"
+      style={{ 
+        backgroundSize: '400% 400%', 
+        backgroundPosition: 'center center'
+      }}
+    >
+      {/* Dynamic moving gradient will be applied via inline style in the animation loop */}
+      
+      {/* Floating icons */}
+      {icons.map((icon) => (
+        <div
+          key={icon.id}
+          className="absolute pointer-events-none transition-transform duration-300"
+          style={{
+            left: `${icon.x}px`,
+            top: `${icon.y}px`,
+            width: `${icon.size}px`,
+            height: `${icon.size}px`,
+            opacity: icon.opacity,
+            transform: `rotate(${icon.rotation}deg)`,
+            zIndex: 1,
+            filter: 'drop-shadow(0 0 6px rgba(0,0,0,0.2))',
+          }}
+        >
+          {renderIcon(icon.type, icon.color)}
+        </div>
+      ))}
+      
+      {/* Glow effects */}
+      <div className="absolute top-0 left-0 w-1/2 h-2/5 bg-primary/5 rounded-full blur-3xl animate-pulse-slow"></div>
+      <div className="absolute bottom-0 right-0 w-2/3 h-1/2 bg-secondary/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-1/4 right-1/4 w-1/3 h-1/3 bg-info/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute bottom-1/3 left-1/4 w-1/3 h-1/2 bg-success/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '3s' }}></div>
+    </div>
+  );
+};
+
+export default AnimatedBackground; 
