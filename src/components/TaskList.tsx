@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Task } from '../types/task';
-import { useCountdown } from '../hooks/useCountdown';
 
 interface TaskListProps {
   tasks: Task[];

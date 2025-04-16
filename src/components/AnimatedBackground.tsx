@@ -93,7 +93,7 @@ const AnimatedBackground: React.FC = () => {
       if (timestamp - lastTimestamp > 40) {
         lastTimestamp = timestamp;
         
-        const { width, height } = containerRef.current.getBoundingClientRect();
+        const { height } = containerRef.current.getBoundingClientRect();
         
         // Update gradient animation - slower to be more subtle
         gradientStep.current = (gradientStep.current + 0.1) % 360;
