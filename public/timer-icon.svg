@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10" stroke="#2563eb" fill="none" />
+  <polyline points="12 6 12 12 16 14" stroke="#2563eb" />
+  <path d="M12 2 L12 4" stroke="#2563eb" />
+  <path d="M12 20 L12 22" stroke="#2563eb" />
+  <path d="M4 12 L2 12" stroke="#2563eb" />
+  <path d="M22 12 L20 12" stroke="#2563eb" />
+</svg> 
