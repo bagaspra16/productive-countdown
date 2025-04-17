@@ -1,0 +1,231 @@
+/* Music Player Additional Styles */
+
+/* Mobile-specific styles */
+@media (max-width: 640px) {
+  .music-player {
+    max-width: 85vw;
+    width: auto;
+    /* Position in bottom left, aligned with floating action button height */
+    left: 0.5rem !important;
+    right: auto !important;
+    bottom: 1.5rem !important;
+  }
+  
+  /* Memastikan panel volume control tidak melebihi layar */
+  .music-player .volume-control-panel {
+    max-width: 250px;
+    left: 0 !important;
+    transform: none !important;
+  }
+  
+  /* Pastikan panel volume muncul di atas control */
+  .music-player [class*="-top-"] {
+    top: -5rem;
+  }
+  
+  /* Buat playlist lebih tinggi di mobile */
+  .music-player .custom-scrollbar[style*="maxHeight"] {
+    max-height: 35vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  
+  /* Ensure the player doesn't get too small on smaller screens */
+  .music-player .collapsed {
+    min-width: auto;
+    max-width: 85vw;
+  }
+  
+  /* Improve touch target sizes for mobile */
+  .music-player button {
+    min-width: 2rem;
+    min-height: 2rem;
+  }
+  
+  /* Ensure scrollable areas work well on touch devices */
+  .music-player .custom-scrollbar {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  /* Ensure text in player is readable on small screens */
+  .music-player .truncate {
+    max-width: 150px;
+  }
+  
+  /* Tambahkan area sentuh yang lebih besar untuk tombol */
+  .music-player button {
+    position: relative;
+  }
+  
+  .music-player button::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    bottom: -5px;
+    left: -5px;
+    right: -5px;
+    z-index: -1;
+  }
+}
+
+/* Meningkatkan kontras saat mode collapsed di mobile */
+@media (max-width: 640px) {
+  .music-player:not(:hover):not(:focus-within) {
+    opacity: 0.9;
+  }
+  
+  .music-player:hover,
+  .music-player:focus-within {
+    opacity: 1;
+  }
+  
+  /* Animasi ketika user menyentuh music player */
+  .music-player:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Better volume slider for touch devices */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #3b82f6; /* primary color */
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+/* Tambahkan sedikit bayangan untuk keseluruhan musik player */
+.music-player {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.music-player:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Musik player memiliki z-index yang lebih rendah dari floating action button */
+.music-player {
+  z-index: 29 !important;
+}
+
+/* Membuat volume slider lebih terlihat pada panel volume */
+.volume-control-panel .bg-primary\/70 {
+  background-color: rgba(59, 130, 246, 0.8) !important;
+  box-shadow: 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+/* Music bars animation */
+.music-bar {
+  display: inline-block;
+  width: 2px;
+  height: 8px;
+  background-color: currentColor;
+  margin: 0 1px;
+  border-radius: 1px;
+  animation: music-bar-animation 1.5s ease-in-out infinite;
+  transform-origin: bottom;
+}
+
+.music-bar-1 {
+  animation-delay: 0s;
+}
+
+.music-bar-2 {
+  animation-delay: 0.2s;
+}
+
+.music-bar-3 {
+  animation-delay: 0.4s;
+}
+
+@keyframes music-bar-animation {
+  0%, 100% {
+    transform: scaleY(0.5);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* Custom scrollbar styling */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.5);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(75, 85, 99, 0.7);
+}
+
+/* Enhanced scrollbar styling for music player */
+.music-player .custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(75, 85, 99, 0.5) rgba(0, 0, 0, 0.1);
+}
+
+.music-player .custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.music-player .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+.music-player .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.5);
+  border-radius: 2px;
+}
+
+.music-player .task-scrollbar {
+  padding-right: 4px;
+}
+
+/* Transitions for a better UX */
+.music-player * {
+  transition: all 0.2s ease;
+}
+
+/* Prevent text selection in player controls */
+.music-player {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Better focus states for accessibility */
+.music-player button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Make sure volume panel has appropriate z-index */
+.music-player .volume-panel {
+  z-index: 50;
+} 

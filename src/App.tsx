@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Countdown from './components/Countdown';
@@ -7,7 +7,9 @@ import TaskInput from './components/TaskInput';
 import Modal from './components/Modal';
 import FloatingActionButton from './components/FloatingActionButton';
 import AnimatedBackground from './components/AnimatedBackground';
+import MusicPlayer from './components/MusicPlayer';
 import { useTasks } from './hooks/useTasks';
+import './styles/music-player.css';
 
 function App() {
   const [taskListModalOpen, setTaskListModalOpen] = useState(false);
@@ -69,6 +71,9 @@ function App() {
           </footer>
         </div>
       </div>
+      
+      {/* Music Player - positioned in the bottom left of the screen */}
+      <MusicPlayer />
       
       {/* Floating Action Button - positioned away from screen edges on mobile */}
       <div className="fixed bottom-4 sm:bottom-8 right-4 sm:right-8 z-30">

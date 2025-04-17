@@ -110,3 +110,74 @@ button, a, .btn, .modal, .modal-content, .task-item {
 .animate-pulse-slow {
   animation: pulse-slow 15s ease-in-out infinite;
 }
+
+/* Music player animations */
+@keyframes music-bar-pulse {
+  0%, 100% {
+    height: 0.5rem;
+  }
+  50% {
+    height: 1rem;
+  }
+}
+
+.music-bar {
+  width: 2px;
+  background-color: currentColor;
+  border-radius: 1px;
+}
+
+.music-bar-1 {
+  animation: music-bar-pulse 1.2s ease-in-out infinite;
+}
+
+.music-bar-2 {
+  animation: music-bar-pulse 1.2s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.music-bar-3 {
+  animation: music-bar-pulse 1.2s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+
+/* Volume range slider custom styling */
+input[type="range"].music-volume {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+input[type="range"].music-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type="range"].music-volume::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+input[type="range"].music-volume::-webkit-slider-thumb:hover,
+input[type="range"].music-volume::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+
+input[type="range"].music-volume::-moz-range-thumb:hover,
+input[type="range"].music-volume::-moz-range-thumb:active {
+  transform: scale(1.2);
+}
