@@ -11,7 +11,7 @@ import MusicPlayer from './components/MusicPlayer';
 import { useTasks } from './hooks/useTasks';
 import './styles/music-player.css';
 
-function App() {
+const App: React.FC = () => {
   const [taskListModalOpen, setTaskListModalOpen] = useState(false);
   const [addTaskModalOpen, setAddTaskModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
