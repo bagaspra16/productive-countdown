@@ -15,10 +15,10 @@ const Header: React.FC<HeaderProps> = ({ onShowAbout }) => {
         </div>
         <h1 className="text-xl font-bold text-gradient">Productive Countdown</h1>
       </div>
-      
+
       <div className="flex items-center">
         {onShowAbout && (
-          <button 
+          <button
             onClick={onShowAbout}
             className="btn btn-outline btn-sm ml-auto"
           >

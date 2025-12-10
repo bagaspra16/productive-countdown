@@ -9,11 +9,11 @@ interface CountdownAlertProps {
 const CountdownAlert: React.FC<CountdownAlertProps> = ({ isOpen, taskTitle, onClose }) => {
   // State to ensure animation works properly
   const [isVisible, setIsVisible] = useState(false);
-  
+
   // Control visibility with animation delay
   useEffect(() => {
     let timeout: number | undefined;
-    
+
     if (isOpen) {
       console.log("Alert opening");
       // Small delay for proper animation
@@ -21,7 +21,7 @@ const CountdownAlert: React.FC<CountdownAlertProps> = ({ isOpen, taskTitle, onCl
     } else {
       setIsVisible(false);
     }
-    
+
     return () => {
       if (timeout) window.clearTimeout(timeout);
     };
@@ -42,16 +42,16 @@ const CountdownAlert: React.FC<CountdownAlertProps> = ({ isOpen, taskTitle, onCl
   if (!isOpen) return null;
 
   return (
-    <div 
+    <div
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
       onClick={(e) => e.stopPropagation()} // Prevent click-through
     >
       {/* Backdrop with blur effect */}
-      <div 
+      <div
         className="fixed inset-0 bg-dark-bg/80 backdrop-blur-md"
         onClick={onClose}
       ></div>
-      
+
       {/* Alert content */}
       <div className={`relative bg-gradient-to-br from-danger/90 to-danger-dark/90 rounded-xl shadow-xl p-5 max-w-sm w-full z-10 
                      border-2 border-danger-light transition-all duration-300 transform ${isVisible ? 'scale-100' : 'scale-95'}`}>
@@ -61,8 +61,8 @@ const CountdownAlert: React.FC<CountdownAlertProps> = ({ isOpen, taskTitle, onCl
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          
-          <button 
+
+          <button
             onClick={(e) => {
               e.stopPropagation();
               onClose();
@@ -74,12 +74,12 @@ const CountdownAlert: React.FC<CountdownAlertProps> = ({ isOpen, taskTitle, onCl
             </svg>
           </button>
         </div>
-        
-        <h2 className="text-xl font-bold text-white mb-2">Waktu Sudah Habis!</h2>
+
+        <h2 className="text-xl font-bold text-white mb-2">Time's Up!</h2>
         <p className="text-white/80 mb-4 text-sm">
-          Tugas <span className="font-semibold text-white">"{taskTitle}"</span> telah selesai.
+          Task <span className="font-semibold text-white">"{taskTitle}"</span> has been completed.
         </p>
-        
+
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -90,7 +90,7 @@ const CountdownAlert: React.FC<CountdownAlertProps> = ({ isOpen, taskTitle, onCl
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
           </svg>
-          Tutup
+          Close
         </button>
       </div>
     </div>
