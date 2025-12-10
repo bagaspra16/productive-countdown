@@ -6,7 +6,6 @@ import { useCountdown } from '../hooks/useCountdown';
 interface CountdownProps {
   activeTask: Task | null;
   onCompleteTask: () => void;
-  onShowTaskList?: () => void;
   sessionType?: SessionType;
   sessionDuration?: number;
   onStartNextSession?: (completedSessionType: SessionType) => void;
@@ -15,7 +14,6 @@ interface CountdownProps {
 const Countdown: React.FC<CountdownProps> = ({
   activeTask,
   onCompleteTask,
-  onShowTaskList,
   sessionType = SessionType.FOCUS,
   sessionDuration,
   onStartNextSession,
@@ -110,7 +108,7 @@ const Countdown: React.FC<CountdownProps> = ({
 
   // Get dynamic classes based on countdown state and session type
   const getCountdownClasses = () => {
-    const baseClasses = "text-[12rem] sm:text-[16rem] md:text-[20rem] font-bold leading-none tracking-tight transition-all duration-300";
+    const baseClasses = "text-[6rem] sm:text-[10rem] md:text-[14rem] lg:text-[18rem] font-bold leading-none tracking-tight transition-all duration-300";
 
     if (isAlmostEnd) {
       return `${baseClasses} text-danger animate-pulse`;
@@ -165,18 +163,6 @@ const Countdown: React.FC<CountdownProps> = ({
         <p className="text-text-secondary text-center mb-8 max-w-md text-sm sm:text-base">
           Select a Pomodoro method to start your productive session.
         </p>
-
-        {onShowTaskList && (
-          <button
-            onClick={onShowTaskList}
-            className="btn btn-primary btn-lg animate-pulse-slow backdrop-blur-sm shadow-glow"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-            Select a Task
-          </button>
-        )}
       </div>
     );
   }
@@ -236,7 +222,7 @@ const Countdown: React.FC<CountdownProps> = ({
               </div>
 
               {/* Progress bar */}
-              <div className="w-full max-w-2xl h-3 bg-dark-accent/30 rounded-full mb-4 overflow-hidden">
+              <div className="w-full max-w-2xl h-2 sm:h-3 bg-dark-accent/30 rounded-full mb-3 sm:mb-4 overflow-hidden">
                 <div
                   className={getProgressBarClasses()}
                   style={{ width: `${progress * 100}%` }}
@@ -303,18 +289,6 @@ const Countdown: React.FC<CountdownProps> = ({
                 <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
               </svg>
               Reset
-            </button>
-          )}
-
-          {onShowTaskList && (
-            <button
-              onClick={onShowTaskList}
-              className="btn btn-outline btn-sm"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
-              Change Task
             </button>
           )}
         </div>

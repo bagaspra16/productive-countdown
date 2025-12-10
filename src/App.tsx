@@ -143,7 +143,6 @@ const App: React.FC = () => {
                 <Countdown
                   activeTask={activeTask}
                   onCompleteTask={handleCompleteSession}
-                  onShowTaskList={() => setTaskListModalOpen(true)}
                   sessionType={currentSession?.type || lastCompletedSessionType || SessionType.FOCUS}
                   sessionDuration={currentSession?.duration}
                   onStartNextSession={startNextSession}
