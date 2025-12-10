@@ -205,23 +205,23 @@ const Countdown: React.FC<CountdownProps> = ({
         </div>
 
         {/* Main Timer Display */}
-        <div className="flex-1 flex flex-col items-center justify-center w-full">
+        <div className="flex-1 flex flex-col items-center justify-center w-full px-4">
           {showCompletionInfo ? (
             <div className="text-center animate-fadeIn" onClick={handleStopAlarm}>
-              <div className="text-[8rem] sm:text-[12rem] font-bold text-success mb-6 leading-none cursor-pointer">
+              <div className="text-[6rem] sm:text-[8rem] md:text-[12rem] font-bold text-success mb-4 sm:mb-6 leading-none cursor-pointer">
                 ✓
               </div>
-              <p className="text-text-primary text-xl sm:text-2xl mb-2 font-bold">
+              <p className="text-text-primary text-lg sm:text-xl md:text-2xl mb-2 font-bold px-4">
                 {completedSessionType === SessionType.FOCUS ? 'Focus Session Completed!' : 'Rest Time Completed!'}
               </p>
-              <p className="text-text-secondary mb-6">
+              <p className="text-text-secondary mb-4 sm:mb-6 text-sm sm:text-base">
                 Session duration: <span className="font-medium">{originalTime} minutes</span>
               </p>
-              <div className={`${completedSessionType === SessionType.FOCUS ? 'bg-secondary/20' : 'bg-primary/20'} rounded-lg p-4 mb-6 max-w-xs mx-auto`}>
-                <p className={`${completedSessionType === SessionType.FOCUS ? 'text-secondary-light' : 'text-primary-light'} font-medium`}>
+              <div className={`${completedSessionType === SessionType.FOCUS ? 'bg-secondary/20' : 'bg-primary/20'} rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 max-w-xs mx-auto`}>
+                <p className={`${completedSessionType === SessionType.FOCUS ? 'text-secondary-light' : 'text-primary-light'} font-medium text-sm sm:text-base`}>
                   {completedSessionType === SessionType.FOCUS ? 'Time for a rest!' : 'Ready for focus!'}
                 </p>
-                <p className="text-text-secondary text-sm mt-2">
+                <p className="text-text-secondary text-xs sm:text-sm mt-2">
                   {completedSessionType === SessionType.FOCUS ? 'Take a break and recharge' : 'Let\'s get back to work'}
                 </p>
               </div>
@@ -259,13 +259,13 @@ const Countdown: React.FC<CountdownProps> = ({
         </div>
 
         {/* Control Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 mt-auto">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-auto px-4 pb-4">
           {showEndAlert && (
             <button
               onClick={handleStopAlarm}
-              className="btn btn-danger btn-lg animate-pulse"
+              className="btn btn-danger btn-sm sm:btn-lg animate-pulse w-full sm:w-auto"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clipRule="evenodd" />
               </svg>
               Stop Alarm
@@ -275,9 +275,9 @@ const Countdown: React.FC<CountdownProps> = ({
           {!showCompletionInfo && !showEndAlert && isRunning ? (
             <button
               onClick={pause}
-              className={`btn ${isAlmostEnd ? 'btn-danger' : isNearEnd ? 'btn-warning' : sessionType === SessionType.REST ? 'btn-secondary' : 'btn-primary'}`}
+              className={`btn btn-sm sm:btn-base ${isAlmostEnd ? 'btn-danger' : isNearEnd ? 'btn-warning' : sessionType === SessionType.REST ? 'btn-secondary' : 'btn-primary'}`}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
               </svg>
               Pause
@@ -285,9 +285,9 @@ const Countdown: React.FC<CountdownProps> = ({
           ) : !showCompletionInfo && (
             <button
               onClick={start}
-              className={`btn ${isAlmostEnd ? 'btn-danger' : isNearEnd ? 'btn-warning' : sessionType === SessionType.REST ? 'btn-secondary' : 'btn-primary'}`}
+              className={`btn btn-sm sm:btn-base ${isAlmostEnd ? 'btn-danger' : isNearEnd ? 'btn-warning' : sessionType === SessionType.REST ? 'btn-secondary' : 'btn-primary'}`}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
               </svg>
               Start
@@ -297,12 +297,24 @@ const Countdown: React.FC<CountdownProps> = ({
           {!showCompletionInfo && !showEndAlert && (
             <button
               onClick={reset}
-              className="btn btn-outline"
+              className="btn btn-outline btn-sm"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
               </svg>
               Reset
+            </button>
+          )}
+
+          {onShowTaskList && (
+            <button
+              onClick={onShowTaskList}
+              className="btn btn-outline btn-sm"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Change Task
             </button>
           )}
         </div>

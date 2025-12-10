@@ -26,7 +26,6 @@ const App: React.FC = () => {
     addTask,
     removeTask,
     startTask,
-    completeActiveTask,
     getActiveTask,
     clearCompletedTasks,
   } = useTasks();

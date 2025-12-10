@@ -24,12 +24,12 @@ const PomodoroMethodSelector: React.FC<PomodoroMethodSelectorProps> = ({ onSelec
     };
 
     return (
-        <div className="w-full max-w-4xl mx-auto px-4">
-            <div className="text-center mb-8">
-                <h2 className="text-3xl sm:text-4xl font-bold text-gradient mb-3">
+        <div className="w-full max-w-4xl mx-auto px-3 sm:px-4">
+            <div className="text-center mb-6 sm:mb-8">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient mb-2 sm:mb-3 px-4">
                     Choose Your Pomodoro Method
                 </h2>
-                <p className="text-text-secondary text-sm sm:text-base max-w-2xl mx-auto">
+                <p className="text-text-secondary text-xs sm:text-sm md:text-base max-w-2xl mx-auto px-4">
                     Select a preset method or create your own custom focus and rest intervals
                 </p>
             </div>
@@ -37,44 +37,44 @@ const PomodoroMethodSelector: React.FC<PomodoroMethodSelectorProps> = ({ onSelec
             {!showCustomForm ? (
                 <>
                     {/* Preset Methods */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6">
                         {POMODORO_PRESETS.map((preset) => (
                             <button
                                 key={preset.id}
                                 onClick={() => handlePresetSelect(preset)}
-                                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-surface/80 to-dark-surface/60 backdrop-blur-lg border border-dark-accent/30 p-6 sm:p-8 text-left transition-all duration-300 hover:scale-105 hover:border-primary/50 hover:shadow-glow"
+                                className="group relative overflow-hidden rounded-xl sm:rounded-2xl bg-gradient-to-br from-dark-surface/80 to-dark-surface/60 backdrop-blur-lg border border-dark-accent/30 p-4 sm:p-6 md:p-8 text-left transition-all duration-300 hover:scale-105 hover:border-primary/50 hover:shadow-glow"
                             >
                                 <div className="relative z-10">
-                                    <h3 className="text-xl sm:text-2xl font-bold text-gradient mb-3">
+                                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gradient mb-2 sm:mb-3">
                                         {preset.name}
                                     </h3>
-                                    <p className="text-text-secondary text-sm mb-4">
+                                    <p className="text-text-secondary text-xs sm:text-sm mb-3 sm:mb-4">
                                         {preset.description}
                                     </p>
 
-                                    <div className="flex items-center gap-4 mb-4">
+                                    <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                                         <div className="flex-1">
                                             <div className="text-xs text-text-muted mb-1">Focus Time</div>
-                                            <div className="text-2xl sm:text-3xl font-bold text-primary">
+                                            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">
                                                 {preset.focusDuration}
-                                                <span className="text-sm text-text-secondary ml-1">min</span>
+                                                <span className="text-xs sm:text-sm text-text-secondary ml-1">min</span>
                                             </div>
                                         </div>
 
-                                        <div className="text-text-muted text-2xl">→</div>
+                                        <div className="text-text-muted text-lg sm:text-2xl">→</div>
 
                                         <div className="flex-1">
                                             <div className="text-xs text-text-muted mb-1">Rest Time</div>
-                                            <div className="text-2xl sm:text-3xl font-bold text-secondary">
+                                            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary">
                                                 {preset.restDuration}
-                                                <span className="text-sm text-text-secondary ml-1">min</span>
+                                                <span className="text-xs sm:text-sm text-text-secondary ml-1">min</span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center text-primary text-sm font-medium">
+                                    <div className="flex items-center text-primary text-xs sm:text-sm font-medium">
                                         Start Session
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                         </svg>
                                     </div>
@@ -90,9 +90,9 @@ const PomodoroMethodSelector: React.FC<PomodoroMethodSelectorProps> = ({ onSelec
                     <div className="text-center">
                         <button
                             onClick={() => setShowCustomForm(true)}
-                            className="btn btn-outline btn-lg group"
+                            className="btn btn-outline btn-sm sm:btn-lg group"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
                             Create Custom Method
