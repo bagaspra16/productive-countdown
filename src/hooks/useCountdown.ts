@@ -53,6 +53,15 @@ export function useCountdown({ initialTime, onComplete }: CountdownProps) {
   // Flag to track if component is mounted
   const isMountedRef = useRef(true);
 
+  // Request notification permission on mount
+  useEffect(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission().then(permission => {
+        console.log('Notification permission:', permission);
+      });
+    }
+  }, []);
+
   // Create audio elements when the component mounts
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -71,7 +80,7 @@ export function useCountdown({ initialTime, onComplete }: CountdownProps) {
 
         if (alarmSoundRef.current) {
           alarmSoundRef.current.src = alarmSound;
-          alarmSoundRef.current.volume = 0.8;
+          alarmSoundRef.current.volume = 1.0; // Maximum volume
           alarmSoundRef.current.loop = true; // Loop the alarm continuously
           alarmSoundRef.current.load();
         }
@@ -283,6 +292,23 @@ export function useCountdown({ initialTime, onComplete }: CountdownProps) {
             if (alarmSoundRef.current) {
               console.log('Playing alarm sound');
               playSound(alarmSoundRef);
+            }
+
+            // Show browser notification
+            if ('Notification' in window && Notification.permission === 'granted') {
+              try {
+                new Notification('⏰ Pomodoro Timer Complete!', {
+                  body: 'Your focus session has ended. Time for a break!',
+                  icon: '/favicon.ico',
+                  badge: '/favicon.ico',
+                  tag: 'pomodoro-timer',
+                  requireInteraction: true, // Keeps notification visible until user interacts
+                  silent: false, // Play system sound
+                });
+                console.log('Browser notification shown');
+              } catch (error) {
+                console.error('Error showing notification:', error);
+              }
             }
 
             // Show end alert
